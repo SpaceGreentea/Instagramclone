@@ -71,6 +71,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(_:forEvent:)), for: .touchUpInside)
+        // 課題用に追加
+//        cell.postButton.addTarget(self, action:#selector(handlepostButton(_:forEvent:)), for: .touchUpInside)
+        //cell.commentsTextField.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
 
         return cell
     }
@@ -103,6 +106,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             postRef.updateData(["likes": updateValue])
         }
     }
+    
+    // 課題用に追加　投稿ボタンをタップしたときに呼ばれるメソッド
+//    @objc func handlepostButton(_ sender: UIButton, forEvent event: UIEvent) {
+//        print("DEBUG_PRINT: 投稿ボタンがタップされました。")
+        
+//        let postRef = Firestore.firestore().collection(Const.PostPath).document(postData.id)
+//        postRef.updateData(["comments": updateValue])
+
+//    }
 }
 
     /*

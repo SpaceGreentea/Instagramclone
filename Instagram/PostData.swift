@@ -17,12 +17,16 @@ class PostData: NSObject {
     var likes: [String] = []
     var isLiked: Bool = false
     
+    // 課題要件：コメント内容と投稿者名を追加
+    var comments: [String] = []
+    var contributor: String?
+    
     init(document: QueryDocumentSnapshot) {
-        self.id = document.documentID
+        self.id = document.documentID //これはfirebase上のAyQDFIXBkZazCyeMvfrtなどのid
         
-        let postDic = document.data()
+        let postDic = document.data() //これはfirebase上のname,caption,・・・などのデータ全て
         
-        self.name = postDic["name"] as? String
+        self.name = postDic["name"] as? String //postDic[なんとか]という書き方で目的のデータを取り出している
         
         self.caption = postDic["caption"] as? String
         
@@ -39,5 +43,12 @@ class PostData: NSObject {
                 self.isLiked = true
             }
         }
+        
+        // 課題要件：コメント内容と投稿者名を追加
+        if let comments = postDic["comments"] as? [String] {
+            self.comments = comments
+        }
+        
+        self.contributor = postDic["contributor"] as? String
     }
 }
