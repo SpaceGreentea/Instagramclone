@@ -19,7 +19,7 @@ class PostData: NSObject {
     
     // 課題要件：コメント内容と投稿者名を追加
     var comments: [String] = []
-    var contributor: String?
+    var contributor: [String] = []
     
     init(document: QueryDocumentSnapshot) {
         self.id = document.documentID //これはfirebase上のAyQDFIXBkZazCyeMvfrtなどのid
@@ -49,6 +49,9 @@ class PostData: NSObject {
             self.comments = comments
         }
         
-        self.contributor = postDic["contributor"] as? String
+        if let contributor = postDic["contributor"] as? [String] {
+            self.contributor = contributor
+        }
+        
     }
 }

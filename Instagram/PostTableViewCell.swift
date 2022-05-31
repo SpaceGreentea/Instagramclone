@@ -44,16 +44,27 @@ class PostTableViewCell: UITableViewCell {
         let postRef = Firestore.firestore().collection(Const.PostPath).document(postDataid)
         // HUDで投稿処理中の表示を開始
         SVProgressHUD.show()
+        
+        // 課題用 日付の取得
+        let date = Date()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let strDate = formatter.string(from: date)
+        
         // FireStoreにコメントと投稿者名を保存する
-        let contributorLabel = Auth.auth().currentUser?.displayName
+        let contributorLabel = strDate + Auth.auth().currentUser!.displayName!
+//        let contributorLabel = strDate + Auth.auth().currentUser?.displayName
 //        let postDic = [
 //            "contributor": contributorLabel!,
 //            "comments": self.commentsTextField.text!,
 //        ] as [String : Any]
 //        postRef.updateData(postDic)
         
-        let commentUpdateValue = FieldValue.arrayUnion([self.commentsTextField.text!])
-        let contributorUpdateValue = FieldValue.arrayUnion([contributorLabel!])
+        //let commentUpdateValue = FieldValue.arrayUnion([self.commentsTextField.text!])
+        let commentUpdateValue = FieldValue.arrayUnion([strDate + self.commentsTextField.text!])
+        let contributorUpdateValue = FieldValue.arrayUnion([contributorLabel])
         
         postRef.updateData(["comments": commentUpdateValue, "contributor": contributorUpdateValue])
         
@@ -108,14 +119,38 @@ class PostTableViewCell: UITableViewCell {
         }
         
         // 課題要件：コメントと投稿者名を表示
-        let commentsArray = postData.comments
-        print("postData \(postData)")
-        print("commentsArray \(commentsArray)")
-        var commentsContents = ""
-        for comment in commentsArray {
-            commentsContents += "\(comment)\n"
+//        let commentsArray = postData.comments
+//        print("postData \(postData)")
+//        print("commentsArray \(commentsArray)")
+//        var commentsContents = ""
+//        for comment in commentsArray {
+//            commentsContents += "\(comment)\n"
+//        }
+//        print("commentsContents \(commentsContents)")
+//
+//        let contributorArray = postData.contributor
+//        var contributorContents = ""
+//        for contributor in contributorArray {
+//            contributorContents += "\(contributor)\n"
+//        }
+//        self.contributorLabel.text = "\(contributorContents) : \(commentsContents)"
+        
+        var comments = ""
+        
+        for (i, text) in postData.comments.enumerated() {
+            
+            print(text)
+            print(type(of: text))
+            
+            var comment = text
+            comment.removeFirst(19)
+            
+            var contributor = postData.contributor[i]
+            contributor.removeFirst(19)
+            
+            comments += "\(contributor):\(comment)\n"
         }
-        print("commentsContents \(commentsContents)")
-        self.contributorLabel.text = commentsContents
+        
+        self.contributorLabel.text = comments
     }
 }
