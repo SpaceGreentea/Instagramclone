@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import FirebaseStorageUI
 import Firebase //課題要件用に追加
-//import FirebaseFirestore
+import FirebaseFirestore //課題要件用に追加
 import SVProgressHUD //課題要件用に追加
 
 class PostTableViewCell: UITableViewCell {
