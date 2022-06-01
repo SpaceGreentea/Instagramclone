@@ -93,7 +93,7 @@ class PostTableViewCell: UITableViewCell {
         postImageView.sd_setImage(with: imageRef)
         
         // キャプションの表示
-        self.captionLabel.text = "\(postData.name!) : \(postData.caption!)"
+        self.captionLabel.text = "[投稿者]\n\(postData.name!) : \(postData.caption!)"
         
         // 日時の表示
         self.dateLabel.text = ""
@@ -139,8 +139,8 @@ class PostTableViewCell: UITableViewCell {
         
         for (i, text) in postData.comments.enumerated() {
             
-            print(text)
-            print(type(of: text))
+            //print(text)
+            //print(type(of: text))
             
             var comment = text
             comment.removeFirst(19)
@@ -148,9 +148,9 @@ class PostTableViewCell: UITableViewCell {
             var contributor = postData.contributor[i]
             contributor.removeFirst(19)
             
-            comments += "\(contributor):\(comment)\n"
+            comments += "\(contributor) : \(comment)\n"
         }
         
-        self.contributorLabel.text = comments
+        self.contributorLabel.text = "[投稿者へのコメント]\n\(comments)"
     }
 }
